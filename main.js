@@ -188,6 +188,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function editBook(id) {
+    let tempBookTitle;
+    let tempBookAuthor;
+    let tempBookYear; 
     const saveEditButton = document.getElementById("saveEditButton");
     const editBookTitle = document.getElementById("editBookTitle");
     const editBookAuthor = document.getElementById("editBookAuthor");
@@ -207,13 +210,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    const tempBook = getDataBook(id);
-    const { tempBookTitle, tempBookAuthor, tempBookYear } = tempBook;
-
-    editBookTitle.value = tempBookTitle;
-    editBookAuthor.value = tempBookAuthor;
-    editBookYear.value = tempBookYear;
-
     const closeButtonEdit = document.getElementById("closeButtonEdit");
     closeButtonEdit.addEventListener("click", function () {
       editBookModal.style.display = "none";
@@ -222,6 +218,22 @@ document.addEventListener("DOMContentLoaded", function () {
         saveMessage.remove();
       }
     });
+
+    const getDataBook = localStorage.getItem(STORAGE_KEY);
+    let data = JSON.parse(getDataBook);
+    if (data !== null) {
+      for (const book of data) {
+        if (book.id === id) {
+          tempBookTitle = book.title;
+          tempBookAuthor = book.author;
+          tempBookYear = book.year;
+        }
+      }
+    }
+
+    editBookTitle.value = tempBookTitle;
+    editBookAuthor.value = tempBookAuthor;
+    editBookYear.value = tempBookYear;
 
     const bookTarget = findBook(id);
     if (bookTarget === null) return;
@@ -394,23 +406,5 @@ document.addEventListener("DOMContentLoaded", function () {
       searchMessage.innerText = "Buku yang anda cari tidak ditemukan";
       searchResult.append(searchMessage);
     }
-  }
-
-  function getDataBook(id) {
-    const getDataBook = localStorage.getItem(STORAGE_KEY);
-    let data = JSON.parse(getDataBook);
-
-    if (data !== null) {
-      for (const book of data) {
-        if (book.id === id) {
-          return {
-            tempBookTitle: book.title,
-            tempBookAuthor: book.author,
-            tempBookYear: book.year,
-          };
-        }
-      }
-    }
-    return null;
   }
 });
