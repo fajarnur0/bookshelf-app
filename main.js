@@ -27,14 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const isComplete = isCompleteCheckbox.checked;
 
     const id = generateBookId();
-    const bookObject = generateBookObject(
-      id,
-      title,
-      author,
-      year,
-      isComplete
-    );
+    const bookObject = generateBookObject(id, title, author, year, isComplete);
+    bookObject.year = Number(bookObject.year);
     books.push(bookObject);
+    console.log(books);
 
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData();
@@ -400,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function getDataBook(id) { 
+  function getDataBook(id) {
     const getDataBook = localStorage.getItem(STORAGE_KEY);
     let data = JSON.parse(getDataBook);
 
