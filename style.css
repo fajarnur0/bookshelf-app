@@ -50,6 +50,7 @@ main {
 #incompleteSection,
 #completeSection {
   padding: 20px;
+  width: 100%;
 }
 
 h2:not(#searchBookSection h2) {
@@ -366,4 +367,22 @@ label[for="bookFormIsComplete"] {
   gap: 10px;
   flex-wrap: wrap;
   padding: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  main {
+    padding: 5px;
+  }
+  #bookFormSubmit {
+    font-size: small;
+  }
+
+  label[for="searchBookTitle"] {
+    display: block;
+    width: fit-content;
+  }
+
+  #searchBookTitle {
+    width: 100%;
+  }
 }
